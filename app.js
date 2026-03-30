@@ -188,30 +188,6 @@ async function cmdProjects() {
     addLine("", "line-output");
 }
 
-function cmdClear() {
-    output.innerHTML = "";
-}
-
-async function cmdHistory() {
-    addLine("", "line-output");
-
-    if (commandHistory.length <= 1) {
-        await typeLine("    No command history yet.", "line-dim", 15);
-    } else {
-        for (let i = Math.min(commandHistory.length - 1, 15); i >= 1; i--) {
-            //only last 15
-            const num = commandHistory.length - i;
-            const cmd = commandHistory[i];
-            const line = document.createElement("div");
-            line.className = "line";
-            line.innerHTML = `    <span style="color: var(--cyan)">${num}</span>    ${cmd}`;
-            output.appendChild(line);
-            await sleep(5);
-        }
-    }
-    addLine("", "line-output");
-}
-
 async function cmdSkills() {
     addLine("", "line-output");
     await typeLine("    My Skills:", "line-accent", 15);
@@ -283,6 +259,46 @@ async function cmdSocials() {
         await sleep(80);
     }
 
+    addLine("", "line-output");
+}
+
+async function cmdHistory() {
+    addLine("", "line-output");
+
+    if (commandHistory.length <= 1) {
+        await typeLine("    No command history yet.", "line-dim", 15);
+    } else {
+        for (let i = Math.min(commandHistory.length - 1, 15); i >= 1; i--) {
+            //only last 15
+            const num = commandHistory.length - i;
+            const cmd = commandHistory[i];
+            const line = document.createElement("div");
+            line.className = "line";
+            line.innerHTML = `    <span style="color: var(--cyan)">${num}</span>    ${cmd}`;
+            output.appendChild(line);
+            await sleep(5);
+        }
+    }
+    addLine("", "line-output");
+}
+
+function cmdClear() {
+    output.innerHTML = "";
+}
+
+async function cmdSudoHireMe() {
+    addLine("", "line-output");
+    await typeLine("    [sudo] password for visitor: ********", "line-dim", 30);
+    addLine("", "line-output");
+    await typeLine("    🔓 Access granted.", "line-green", 25);
+    addLine("", "line-output");
+    await typeLine("    Initializing resume transmission...", "line-cyan", 25);
+    await typeLine("    Contacting all Future 500 companies...", "line-cyan", 25);
+    await typeLine("    Sending cover letter... ██████████ 100%", "line-green", 30);
+    await typeLine("    Scheduling interviews... ██████████ 100", "line-green", 30);
+    addLine("", "line-output");
+    await typeLine("    ✅ Done! Just kidding... :D", "line-yellow", 25);
+    await typeLine(`    But seriously, reach out: ${DATA.contact.email}`, "line-accent", 20);
     addLine("", "line-output");
 }
 
