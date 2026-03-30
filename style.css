@@ -92,7 +92,7 @@ body::after {
     word-wrap: break-word;
 }
 
-/*other styles */
+/*other styles/ all line styles */
 .line {
     margin: 0;
     padding: 0;
@@ -156,4 +156,71 @@ body::after {
             0 0 14px rgba(236, 55, 80, 0.8),
             0 0 24px rgba(236, 55, 80, 0.5);
     }
+}
+
+.line a {
+    color: #ec3750;
+    text-decoration: none;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.line a::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #ec3750;
+    transition: width 0.3s ease;
+    box-shadow: 0 0 8px #ec3750;
+}
+
+.line a:hover::after {
+    width: 100%;
+}
+
+.line a:hover {
+    text-shadow: 0 0 8px rgba(236, 55, 80, 0.8);
+}
+
+.project.card {
+    border-left: 3px solid #ec3750;
+    padding-left: 12px;
+    margin: 8px 0;
+    background: rgba(236, 55, 80, 0.03);
+    padding: 13px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    animation: slideIn 0.4s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.project-card:hover {
+    background: rgba(236, 55, 80, 0.08);
+    border-left-color: #ec3750;
+    box-shadow: -3px 0 15px rgba(236, 55, 80, 0.3);
+    transform: translateX(4px);
+}
+
+.project-name {
+    color: #ec3750;
+    font-weight: 700;
+    text-shadow: 0 0 5px rgba(236, 55, 80, 0.3);
+}
+
+.project-tech {
+    color: var(--dim);
+    font-size: 12px;
 }

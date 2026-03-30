@@ -19,7 +19,8 @@ const DATA = {
         "I'm a high school student and a developer who loves building things",
         "with code. I'm interested in web dev, physics",
         "simulations, taycoon games and creative coding projects.",
-        "Currently exploring: React, Python(Manim), Canvas animations",
+        "",
+        "Currently exploring: React, Python(Manim), Canvas animations.",
         "Fun fact: I believe true complexity lies in simplicity!",
     ],
 

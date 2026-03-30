@@ -13,7 +13,7 @@ let snakeActive = false;
 const commands = {
     help: cmdHelp,
     about: cmdAbout,
-    // projects: cmdProjects,
+    projects: cmdProjects,
     // skills: cmdSkills,
     // contact: cmdContact,
     // socials: cmdSocials,
@@ -143,6 +143,46 @@ async function cmdAbout() {
 
     for (const line of DATA.about) {
         await typeLine(line, "line-output", 18);
+    }
+
+    addLine("", "line-output");
+}
+
+async function cmdProjects() {
+    addLine("", "line-output");
+    await typeLine("    My Projects:", "line-accent", 15);
+    await typeLine("    ------------------------------", "line-dim", 5);
+
+    // each proj rendered as card with all data
+    for (const project of DATA.projects) {
+        addLine("", "line-output");
+
+        const nameDiv = document.createElement("div");
+        nameDiv.className = "line project-card";
+
+        const nameLine = document.createElement("div");
+        nameLine.classNmae = "project-name";
+        nameLine.textContent = `${project.emoji} ${project.name}`;
+        nameDiv.appendChild(nameLine);
+
+        const descLine = document.createElement("div");
+        descLine.className = "line-output";
+        descLine.textContent = `    ${project.description}`;
+        nameDiv.appendChild(descLine);
+
+        const techLine = document.createElement("div");
+        techLine.className = "project-tech";
+        techLine.textContent = `    [${project.tech.join(", ")}]`;
+        nameDiv.appendChild(techLine);
+
+        if (project.url) {
+            const linkLine = document.createElement("div");
+            linkLine.innerHTML = `  → <a href="${project.url}" target="_blank">${project.url}</a>`;
+            nameDiv.appendChild(linkLine);
+        }
+
+        output.appendChild(nameDiv);
+        await sleep(100);
     }
 
     addLine("", "line-output");
