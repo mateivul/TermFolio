@@ -2,12 +2,36 @@
 const output = document.getElementById("output");
 const input = document.getElementById("command-input");
 const terminal = document.getElementById("terminal");
-const convas = document.getElementById("overlay-canvas");
+const canvas = document.getElementById("overlay-canvas");
 
 let commandHistory = [];
 let historyIndex = -1;
 let isTyping = false;
 let snakeActive = false;
+
+// all comands available
+const commands = {
+    help: cmdHelp,
+    about: cmdAbout,
+    // projects: cmdProjects,
+    // skills: cmdSkills,
+    // contact: cmdContact,
+    // socials: cmdSocials,
+    // clear: cmdClear,
+    // history: cmdClear, // the next ones are hidden :))
+    // snake: cmdSnake,
+    // matrix: cmdMatrix,
+    // hack: cmdHack,
+    // cowsay: cmdCowsay,
+    // fortune: cmdFortune,
+    // whoami: cmdWhoami,
+    // date: cmdDate,
+    // vim: cmdVim,
+    // echo: cmdEcho,
+    // exit: cmdExit,
+    // logout: cmdExit, //same
+    ls: cmdHelp, // same as help
+};
 
 window.addEventListener("load", async () => {
     addBannerLines(DATA.banner);
@@ -30,7 +54,7 @@ input.addEventListener("keydown", async (e) => {
 
     // if entered a command
     if (e.key === "Enter") {
-        const cmd = input.ariaValueMax.trim();
+        const cmd = input.value.trim();
         input.value = "";
         if (cmd) {
             commandHistory.unshift(cmd);
@@ -61,7 +85,7 @@ input.addEventListener("keydown", async (e) => {
         e.preventDefault();
         const partial = input.value.trim().toLowerCase();
         if (partial) {
-            const allCommands = Object.key(commands);
+            const allCommands = Object.keys(commands);
             const matches = allCommands.filter((c) => c.startsWith(partial));
             if (matches.length == 1) {
                 input.value = matches[0];
@@ -95,30 +119,6 @@ async function processCommand(rawCmd) {
         await typeLine(`Command not found: ${cmd}. Type 'help' for available commands.`, "line-error", 15);
     }
 }
-
-// all comands available
-const commands = {
-    help: cmdHelp,
-    about: cmdAbout,
-    projects: cmdProjects,
-    skills: cmdSkills,
-    contact: cmdContact,
-    socials: cmdSocials,
-    clear: cmdClear,
-    history: cmdClear, // the next ones are hidden :))
-    snake: cmdSnake,
-    matrix: cmdMatrix,
-    hack: cmdHack,
-    cowsay: cmdCowsay,
-    fortune: cmdFortune,
-    whoami: cmdWhoami,
-    date: cmdDate,
-    vim: cmdVim,
-    echo: cmdEcho,
-    exit: cmdExit,
-    logout: cmdExit, //same
-    ls: cmdHelp, // same as help
-};
 
 // all comands functions
 async function cmdHelp() {
