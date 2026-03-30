@@ -112,3 +112,55 @@ const commands = {
     logout: cmdExit, //same
     ls: cmdHelp, // same as help
 };
+
+//typing functions (output)
+function addLine(text, className = "line-output") {
+    const div = document.createElement("div");
+    div.className = `line ${className}`;
+    div.textContent = text;
+    output.appendChild(div);
+    scrollToBottom();
+}
+
+function addBannerLines(bannerText) {
+    const lines = bannerText.split("\n");
+    for (const line of lines) {
+        const div = document.createElement("div");
+        div.className = "line line-banner";
+        div.textContent = line;
+        output.appendChild(div);
+    }
+}
+
+function addHTMLLine(html, className = "line-output") {
+    const div = document.createElement("div");
+    div.className = `line ${className}`;
+    div.innerHTML = html;
+    output.appendChild(div);
+    scrollToBottom();
+}
+
+async function typeLine(text, className = "line-output", speed = 20) {
+    isTyping = true;
+
+    const div = document.createElement("div");
+    div.className = `line ${className}`;
+    output.appendChild(div);
+
+    // delay after each char
+    for (let i = 0; i < text.length; i++) {
+        div.textContent = text.substring(0, i + 1);
+        scrollToBottom();
+        await sleep(speed);
+    }
+
+    isTyping = false;
+}
+
+function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function scrollToBottom() {
+    window.scrollTo(0, document.body.scrollHeight);
+}
