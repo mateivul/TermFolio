@@ -20,7 +20,7 @@ const commands = {
     clear: cmdClear,
     history: cmdHistory, // the next ones are hidden :))
     // snake: cmdSnake,
-    // matrix: cmdMatrix,
+    matrix: cmdMatrix,
     // hack: cmdHack,
     // cowsay: cmdCowsay,
     // fortune: cmdFortune,
@@ -300,6 +300,57 @@ async function cmdSudoHireMe() {
     await typeLine("    ✅ Done! Just kidding... :D", "line-yellow", 25);
     await typeLine(`    But seriously, reach out: ${DATA.contact.email}`, "line-accent", 20);
     addLine("", "line-output");
+}
+
+async function cmdMatrix() {
+    //somesort of a rain matrix effect (like in movies ofc)
+    canvas.classList.add("active");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const fontSize = 14;
+    const columns = Math.floor(canvas.width / fontSize);
+    const drops = Array(columns).fill(1);
+    //random japanese text + some chars
+    const chars =
+        "ヴォパッㇳヒグㇱエニョドォヷメシプツテネガㇱョフョラァツダヒヌヘミャリッヨガクペヷヸヹヺヷヰヱヲンㇷ゚キㇽ0123456789ABCDEFG";
+
+    let frames = 0;
+    const maxFrames = 150;
+
+    function drawMatrix() {
+        ctx.fillStyle = "rgba(0,0,0,0.05)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = "#ec3750";
+        ctx.font = `${fontSize}px 'JetBrains Mono', monospace`;
+
+        // actually drawing the chras
+        for (let i = 0; i < drops.length; i++) {
+            const char = chars[Math.floor(Math.random() * chars.length)];
+            ctx.fillText(char, i * fontSize, drops[i] * fontSize);
+
+            if (drops[i] * fontSize > canvas.height && Math.random() > 0.9751) {
+                drops[i] = 0;
+            }
+            drops[i]++;
+        }
+
+        frames++;
+        if (frames < maxFrames) {
+            requestAnimationFrame(drawMatrix);
+        } else {
+            //clean after
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            canvas.classList.remove("active");
+            addLine("   Wake up, Neo...🐇", "line-green");
+            addLine("", "line-output");
+            input.focus();
+        }
+    }
+
+    drawMatrix();
 }
 
 //typing functions (output)
