@@ -111,6 +111,11 @@ body::after {
     color: var(--accent);
 }
 
+.line-accent {
+    color: var(--accent);
+    text-shadow: 0 0 5px rgba(236, 55, 80, 0.4);
+}
+
 .line-dim {
     color: var(--dim);
 }
@@ -223,4 +228,14 @@ body::after {
 .project-tech {
     color: var(--dim);
     font-size: 12px;
+}
+
+.skill-category {
+    color: var(--accent);
+    font-weight: 700;
+    margin-top: 8px;
+}
+
+.skill-items {
+    color: var(--text);
 }

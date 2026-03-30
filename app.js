@@ -14,7 +14,7 @@ const commands = {
     help: cmdHelp,
     about: cmdAbout,
     projects: cmdProjects,
-    // skills: cmdSkills,
+    skills: cmdSkills,
     // contact: cmdContact,
     // socials: cmdSocials,
     // clear: cmdClear,
@@ -186,6 +186,35 @@ async function cmdProjects() {
     }
 
     addLine("", "line-output");
+}
+
+async function cmdSkills() {
+    addLine("", "line-output");
+    await typeLine("    My Skills:", "line-accent", 15);
+    await typeLine("    --------------------------", "line-dim", 5);
+    addLine("", "line-output");
+
+    // so 4 skill categ , all w/ special color
+    const categories = [
+        { label: "Languages", items: DATA.skills.languages, color: "line-accent" },
+        { label: "Frameworks", items: DATA.skills.frameworks, color: "line-cyan" },
+        { label: "Tools", items: DATA.skills.tools, color: "line-green" },
+        { lavel: "Learning", items: DATA.skills.learning, color: "line-yellow" },
+    ];
+
+    for (const cat of categories) {
+        await typeLine(`    ${cat.label}:`, cat.color, 15);
+
+        //showing stars as level for each
+        //representing how much i know of that
+        const skillStrings = cat.items.map((skill) => {
+            const stars = "★".repeat(skill.stars) + "☆".repeat(5 - skill.stars);
+            return `${skill.name} ${stars}`;
+        });
+
+        await typeLine(`    ${skillStrings.join("   <>   ")}`, "line-output", 10);
+        addLine("", "line-output");
+    }
 }
 
 //typing functions (output)

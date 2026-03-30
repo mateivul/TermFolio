@@ -35,10 +35,13 @@ const DATA = {
     ],
 
     skills: {
-        languages: [],
-        frameworks: [],
-        tools: [],
-        learning: [],
+        languages: [
+            { name: "C++", stars: 4 },
+            { name: "JavaScript", stars: 4 },
+        ],
+        frameworks: [{ name: "React", stars: 3 }],
+        tools: [{ name: "Git", stars: 4 }],
+        learning: [{ name: "Node.js", stars: 2 }],
     },
 
     contact: {
