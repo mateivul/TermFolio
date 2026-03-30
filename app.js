@@ -17,8 +17,8 @@ const commands = {
     skills: cmdSkills,
     contact: cmdContact,
     socials: cmdSocials,
-    // clear: cmdClear,
-    // history: cmdClear, // the next ones are hidden :))
+    clear: cmdClear,
+    history: cmdHistory, // the next ones are hidden :))
     // snake: cmdSnake,
     // matrix: cmdMatrix,
     // hack: cmdHack,
@@ -185,6 +185,30 @@ async function cmdProjects() {
         await sleep(100);
     }
 
+    addLine("", "line-output");
+}
+
+function cmdClear() {
+    output.innerHTML = "";
+}
+
+async function cmdHistory() {
+    addLine("", "line-output");
+
+    if (commandHistory.length <= 1) {
+        await typeLine("    No command history yet.", "line-dim", 15);
+    } else {
+        for (let i = Math.min(commandHistory.length - 1, 15); i >= 1; i--) {
+            //only last 15
+            const num = commandHistory.length - i;
+            const cmd = commandHistory[i];
+            const line = document.createElement("div");
+            line.className = "line";
+            line.innerHTML = `    <span style="color: var(--cyan)">${num}</span>    ${cmd}`;
+            output.appendChild(line);
+            await sleep(5);
+        }
+    }
     addLine("", "line-output");
 }
 
