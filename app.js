@@ -15,8 +15,8 @@ const commands = {
     about: cmdAbout,
     projects: cmdProjects,
     skills: cmdSkills,
-    // contact: cmdContact,
-    // socials: cmdSocials,
+    contact: cmdContact,
+    socials: cmdSocials,
     // clear: cmdClear,
     // history: cmdClear, // the next ones are hidden :))
     // snake: cmdSnake,
@@ -215,6 +215,51 @@ async function cmdSkills() {
         await typeLine(`    ${skillStrings.join("   <>   ")}`, "line-output", 10);
         addLine("", "line-output");
     }
+}
+
+async function cmdContact() {
+    addLine("", "line-output");
+    await typeLine("    Contact:", "line-output", 15);
+    await typeLine("    ------------------------", "line-dim", 5);
+
+    if (DATA.contact.email) {
+        const emailLine = document.createElement("div");
+        emailLine.className = "line line-cyan";
+        emailLine.innerHTML = `    📧 Email: <a href="mailto:${DATA.contact.email}">${DATA.contact.email}</a>`;
+        output.appendChild(emailLine);
+        await sleep(80);
+    }
+
+    if (DATA.contact.location) {
+        await typeLine(`    📍 Location: ${DATA.contact.location}`, "line-cyan", 15);
+    }
+
+    addLine("", "line-output");
+}
+
+async function cmdSocials() {
+    addLine("", "line-output");
+    await typeLine("    Find me online:", "line-accent", 15);
+    await typeLine("    --------------------------", "line-dim", 5);
+
+    const icons = {
+        //cooler this way sry
+        github: "🐙",
+        instagram: "📸",
+        hackclub: "🦕",
+        linkedin: "💼",
+    };
+
+    for (const [platform, url] of Object.entries(DATA.socials)) {
+        const icon = icons[platform] || "";
+        const linkDiv = document.createElement("div");
+        linkDiv.className = "line";
+        linkDiv.innerHTML = `   ${icon} ${platform}: <a href="${url}" target="_blank">${url}</a>`;
+        output.appendChild(linkDiv);
+        await sleep(80);
+    }
+
+    addLine("", "line-output");
 }
 
 //typing functions (output)

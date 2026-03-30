@@ -46,7 +46,7 @@ const DATA = {
 
     contact: {
         email: "mateivultur08@gmail.com",
-        locaiton: "Romania",
+        location: "Romania",
     },
 
     socials: {
