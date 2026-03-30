@@ -19,6 +19,12 @@ window.addEventListener("load", async () => {
     input.focus();
 });
 
+terminal.addEventListener("click", async (e) => {
+    if (!snakeActive) {
+        input.focus();
+    }
+});
+
 input.addEventListener("keydown", async (e) => {
     if (isTyping) return;
 
@@ -90,6 +96,7 @@ async function processCommand(rawCmd) {
     }
 }
 
+// all comands available
 const commands = {
     help: cmdHelp,
     about: cmdAbout,
@@ -112,6 +119,34 @@ const commands = {
     logout: cmdExit, //same
     ls: cmdHelp, // same as help
 };
+
+// all comands functions
+async function cmdHelp() {
+    addLine("", "line-output");
+    await typeLine("    Available Commands:", "line-accent", 15);
+    await typeLine("    ----------------------------------", "line-dim", 5);
+    await typeLine("    about       - Who am I?", "line-output", 8);
+    await typeLine("    projects    - What i've build", "line-output", 8);
+    await typeLine("    skills      - My tech stack", "line-output", 8);
+    await typeLine("    contact     - How to reach me", "line-output", 8);
+    await typeLine("    socials     - Find me online", "line-output", 8);
+    await typeLine("    history     - Command history", "line-dim", 8);
+    await typeLine("    clear       - Clear terminal", "line-dim", 8);
+    await typeLine("    help        - Show this message", "line-dim", 8);
+    addLine("", "line-output");
+    await typeLine("    ...and some secret commands 🤫", "line-yellow", 15);
+    addLine("", "line-output");
+}
+
+async function cmdAbout() {
+    addLine("", "line-output");
+
+    for (const line of DATA.about) {
+        await typeLine(line, "line-output", 18);
+    }
+
+    addLine("", "line-output");
+}
 
 //typing functions (output)
 function addLine(text, className = "line-output") {
