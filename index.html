@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale="1.0">
+        <title>Matei Vultur - Terminal Portofolio</title>
+        <meta name="description" content="Matei Vultur's portofolio - type 'help' to explore">
+
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://mateivul.github.io/TermFolio">
+        <meta property="og:title" content="Matei Vultur - Terminal Portofolio">
+        <meta property="og:description" content="A terminal-style protofolio. Type commands to explore my projects, skills and more.">
+
+        <!-- and for x -->
+        <meta property="twitter:card" content="summary_large_image">
+        <meta property="twitter:url" content="https://mateivul.github.io/TermFolio">
+        <meta property="twitter:title" content="Matei Vultur - Terminal Portofolio">
+        <meta popoerty="twitter:description" content="A terminal-style portofolio. Type commands to explore my projects, skills and more.">
+
+        <link rel="stylesheet" href="style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com/">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap">
+    </head>
+    <body>
+        <div id="terminal">
+            <div id="output"></div>
+
+            <div id="input-line">
+                <span id="prompt">visitor@protofolio:~$&nbsp;</span>
+                <input type="text" id="command-input" autofocus autocomplete="off" autocapitalize="off" spellcheck="false"/>
+            </div>
+        </div>
+
+        <canvas id="overlay-canvas"></canvas>
+
+        <script src="data.js"></script>
+    </body>
+</html>
