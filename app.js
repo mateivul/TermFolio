@@ -21,8 +21,8 @@ const commands = {
     history: cmdHistory, // the next ones are hidden :))
     // snake: cmdSnake,
     matrix: cmdMatrix,
-    // hack: cmdHack,
-    // cowsay: cmdCowsay,
+    hack: cmdHack,
+    cowsay: cmdCowsay,
     // fortune: cmdFortune,
     // whoami: cmdWhoami,
     // date: cmdDate,
@@ -351,6 +351,48 @@ async function cmdMatrix() {
     }
 
     drawMatrix();
+}
+
+async function cmdHack() {
+    await typeLine("    Initializing hack sequence...", "line-cyan", 20);
+    await typeLine("    Bypassing firewall ██████▒▒▒▒ 60%", "line-yellow", 30);
+    await typeLine("    Bypassing firewall ████████▒▒ 80%", "line-yellow", 30);
+    await typeLine("    Bypassing firewall ██████████ 100%", "line-green", 30);
+    await typeLine("    Cracking encryption: AES-256... FAILED", "line-accent", 20);
+    await typeLine("    Cracking encryption: ROT13... SUCCESS", "line-green", 20);
+    await typeLine("    Accessing mainframe...", "line-cyan", 20);
+    await typeLine("    Downloading secret files...", "line-cyan", 20);
+    await typeLine("    nuclear_codes.txt ........... 1.2 KB", "line-dim", 15);
+    await typeLine("    grandma_cookies_recipe.pdf .. 4.7 MB", "line-dim", 15);
+    await typeLine("    meaning_of_life.txt .. 64 TB", "line-dim", 15);
+    addLine("", "line-output");
+    await typeLine("    ERROR: Hack interrupted.", " line-accent", 20);
+    await typeLine("    Reason: This is a portofolio, not a hacking tool. :D", "line-yellow", 20);
+    await typeLine("    Try: 'projects' instead, that's where the real magic is...", "line-output", 20);
+    addLine("", "line-output");
+}
+
+async function cmdCowsay(args) {
+    const message = args.length > 0 ? args.join(" ") : DATA.cowsayDefault;
+    const border = "-".repeat(message.length + 2);
+
+    const cow = [
+        `   ┌${border}┐`,
+        `   | ${message} |`,
+        `   └${border}┘`,
+        `          \\   ^__^`,
+        `           \\  (oo)\\_______`,
+        `              (__)\\       )\\/\\`,
+        `                  ||----w |`,
+        `                  ||     ||`,
+    ];
+    //bro this asci art stuff is cool but hard
+
+    addLine("", "line-output");
+    for (const line of cow) {
+        addLine(line, "line-yellow");
+    }
+    addLine("", "line-output");
 }
 
 //typing functions (output)

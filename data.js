@@ -55,4 +55,6 @@ const DATA = {
     },
 
     fortunes: [],
+
+    cowsayDefault: "Moo! Check out my projects!",
 };
