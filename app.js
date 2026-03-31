@@ -9,7 +9,6 @@ let historyIndex = -1;
 let isTyping = false;
 let snakeActive = false;
 
-// all comands available
 const commands = {
     help: cmdHelp,
     about: cmdAbout,
@@ -165,7 +164,7 @@ async function cmdProjects() {
         nameDiv.className = "line project-card";
 
         const nameLine = document.createElement("div");
-        nameLine.classNmae = "project-name";
+        nameLine.className = "project-name";
         nameLine.textContent = `${project.emoji} ${project.name}`;
         nameDiv.appendChild(nameLine);
 
@@ -299,7 +298,7 @@ async function cmdSudoHireMe() {
     await typeLine("    Initializing resume transmission...", "line-cyan", 25);
     await typeLine("    Contacting all Future 500 companies...", "line-cyan", 25);
     await typeLine("    Sending cover letter... ██████████ 100%", "line-green", 30);
-    await typeLine("    Scheduling interviews... ██████████ 100", "line-green", 30);
+    await typeLine("    Scheduling interviews... ██████████ 100%", "line-green", 30);
     addLine("", "line-output");
     await typeLine("    ✅ Done! Just kidding... :D", "line-yellow", 25);
     await typeLine(`    But seriously, reach out: ${DATA.contact.email}`, "line-accent", 20);
@@ -312,6 +311,12 @@ async function cmdMatrix() {
     const ctx = canvas.getContext("2d");
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+
+    canvas.style.position = "fixed";
+    canvas.style.top = "0";
+    canvas.style.left = "0";
+    canvas.style.width = "100vw";
+    canvas.style.height = "100vh";
 
     const fontSize = 14;
     const columns = Math.floor(canvas.width / fontSize);
@@ -350,7 +355,7 @@ async function cmdMatrix() {
             canvas.classList.remove("active");
             addLine("   Wake up, Neo...🐇", "line-green");
             addLine("", "line-output");
-            input.focus();
+            setTimeout(() => input.focus(), 0);
         }
     }
 
@@ -368,7 +373,7 @@ async function cmdHack() {
     await typeLine("    Downloading secret files...", "line-cyan", 20);
     await typeLine("    nuclear_codes.txt ........... 1.2 KB", "line-dim", 15);
     await typeLine("    grandma_cookies_recipe.pdf .. 4.7 MB", "line-dim", 15);
-    await typeLine("    meaning_of_life.txt .. 64 TB", "line-dim", 15);
+    await typeLine("    meaning_of_life.txt ......... 64 TB", "line-dim", 15);
     addLine("", "line-output");
     await typeLine("    ERROR: Hack interrupted.", " line-accent", 20);
     await typeLine("    Reason: This is a portofolio, not a hacking tool. :D", "line-yellow", 20);
@@ -449,7 +454,7 @@ async function cmdEcho(args) {
 }
 
 async function cmdExit() {
-    addLine("", "line-ouput");
+    addLine("", "line-output");
     await typeLine("    Nice try! But you can't excape a web portofolio. :>", "line-yellow", 18);
     await typeLine("    (You can close the tab though... but why would you?", "lin-dim", 15);
     addLine("", "line-output");
@@ -599,10 +604,11 @@ async function cmdSnake() {
     }
 
     function onSnakeKey(e) {
+        if (!snakeActive) return;
         if (e.key === "Escape") {
             clearInterval(gameInterval);
             document.removeEventListener("keydown", onSnakeKey);
-            document.addEventListener("keydown", onSnakeKey);
+            // document.addEventListener("keydown", onSnakeKey);
             ctx.clearRect(0, 0, canvasSize, canvasSize);
             canvas.classList.remove("active");
 
