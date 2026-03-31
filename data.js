@@ -4,11 +4,11 @@ const DATA = {
     hostname: "portofolio",
 
     banner: `
- __  __       _       _  __     __     _ _              
-|  \/  | __ _| |_ ___(_) \ \   / /   _| | |_ _   _ _ __ 
-| |\/| |/ _\` | __/ _ \ |  \ \ / / | | | | __| | | | '__|
-| |  | | (_| | ||  __/ |   \ V /| |_| | | |_| |_| | |   
-|_|  |_|\__,_|\__\___|_|    \_/  \__,_|_|\__|\__,_|_|                                                         
+  __  __       _       _  __     __     _ _              
+ |  \\/  | __ _| |_ ___(_) \\ \\   / /   _| | |_ _   _ _ __ 
+ | |\\/| |/ _\` | __/ _ \\ |  \\ \\ / / | | | | __| | | | '__|
+ | |  | | (_| | ||  __/ |   \\ V /| |_| | | |_| |_| | |   
+ |_|  |_|\\__,_|\\__\\___|_|    \\_/  \\__,_|_|\\__|\\__,_|_|  
 `,
 
     welcome: ["Welcome to my terminal portofolio!", "Type 'help' to see available commands.", ""],
@@ -32,16 +32,62 @@ const DATA = {
             tech: ["Vanilla JS", "HTML", "CSS"],
             url: "https://github.com/mateivul/TermFolio",
         },
+        {
+            name: "FourierOrpheus",
+            emoji: "🦕",
+            description: "Drawing the Hack Club logo with 80 rotating circles using Manim!",
+            tech: ["Python", "Manim", "Fourier Transform"],
+            url: "https://github.com/mateivul/FourierOrpheus",
+        },
+        {
+            name: "TickDown",
+            emoji: "⏱️",
+            description: "Countdown timer with animated digits, shareable via URL!",
+            tech: ["React", "Vite", "TailWind CSS"],
+            url: "https://github.com/mateivul/TickDown",
+        },
+        {
+            name: "PhysicsPlayground",
+            emoji: "⚽",
+            description: "Simple physics simulation of gravity and elasticity!",
+            tech: ["JavaScript", "Vite", "HTML", "CSS"],
+            url: "https://github.com/mateivul/PhysicsPlayground",
+        },
+        {
+            name: "ROG-cosmos",
+            emoji: "🌌",
+            description: "A game for Republic Of Gamers 2026!",
+            tech: ["Game Developement"],
+            url: "https://github.com/mateivul/ROG-cosmos",
+        },
     ],
 
     skills: {
         languages: [
             { name: "C++", stars: 4 },
             { name: "JavaScript", stars: 4 },
+            { name: "HTML/CSS", stars: 4 },
+            { name: "PHP", stars: 4 },
+            { name: "SQL", stars: 2 },
         ],
-        frameworks: [{ name: "React", stars: 3 }],
-        tools: [{ name: "Git", stars: 4 }],
-        learning: [{ name: "Node.js", stars: 2 }],
+        frameworks: [
+            { name: "React", stars: 3 },
+            { name: "Tailwind CSS", stars: 4 },
+            { name: "Vite", stars: 4 },
+            { name: "Express", stars: 3 },
+        ],
+        tools: [
+            { name: "Git", stars: 4 },
+            { name: "VS Code", stars: 5 }, //top editor
+            { name: "Manim", stars: 3 },
+            { name: "Canvas API", stars: 2 },
+            { name: "FFmpeg", stars: 2 },
+        ],
+        learning: [
+            { name: "Node.js", stars: 2 },
+            { name: "TypeScript", stars: 3 },
+            { name: "Three.js", stars: 2 },
+        ],
     },
 
     contact: {

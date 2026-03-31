@@ -177,7 +177,7 @@ async function cmdProjects() {
 
         if (project.url) {
             const linkLine = document.createElement("div");
-            linkLine.innerHTML = `  → <a href="${project.url}" target="_blank">${project.url}</a>`;
+            linkLine.innerHTML = `    → <a href="${project.url}" target="_blank">${project.url}</a>`;
             nameDiv.appendChild(linkLine);
         }
 
