@@ -19,7 +19,7 @@ const commands = {
     socials: cmdSocials,
     clear: cmdClear,
     history: cmdHistory, // the next ones are hidden :))
-    // snake: cmdSnake,
+    snake: cmdSnake,
     matrix: cmdMatrix,
     hack: cmdHack,
     cowsay: cmdCowsay,
@@ -449,6 +449,182 @@ async function cmdExit() {
     await typeLine("    Nice try! But you can't excape a web portofolio. :>", "line-yellow", 18);
     await typeLine("    (You can close the tab though... but why would you?", "lin-dim", 15);
     addLine("", "line-output");
+}
+
+//the minigame ...
+async function cmdSnake() {
+    addLine("   Starting Snake... Use arrow keys. Press ESC to quit.", "line-cyan");
+    addLine("", "line-output");
+
+    snakeActive = true;
+    canvas.classList.add("active");
+    const ctx = canvas.getContext("2d");
+
+    const gridSize = 20;
+    const canvasSize = Math.min(window.innerHeight, window.innerWidth, 400);
+
+    canvas.width = canvasSize;
+    canvas.height = canvasSize;
+    canvas.style.width = canvasSize + "px";
+    canvas.style.height = canvasSize + "px";
+
+    canvas.style.left = (window.innerWidth - canvasSize) / 2 + "px";
+    canvas.style.top = (window.innerHeight - canvasSize) / 2 + "px";
+    canvas.style.position = "fixed";
+    canvas.style.border = "2px solid #ec3750";
+    canvas.style.borderRadius = "8px";
+
+    const cols = Math.floor(canvasSize / gridSize);
+    const rows = Math.floor(canvasSize / gridSize);
+
+    let snake = [{ x: Math.floor(cols / 2), y: Math.floor(rows / 2) }];
+    let direction = { x: 1, y: 0 };
+    let food = spawnFood();
+    let score = 0;
+    let gameOver = false;
+    let gameInterval;
+
+    function spawnFood() {
+        let pos;
+        do {
+            pos = {
+                x: Math.floor(Math.random() * cols),
+                y: Math.floor(Math.random() * rows),
+            };
+        } while (snake.some((s) => s.x === pos.x && s.y === pos.y));
+        return pos;
+    }
+
+    function draw() {
+        ctx.fillStyle = "#000";
+        ctx.fillRect(0, 0, canvasSize, canvasSize);
+
+        ctx.strokeStyle = "rgba(255,255,255,0.03)";
+        for (let x = 0; x < canvasSize; x += gridSize) {
+            ctx.beginPath();
+            ctx.moveTo(x, 0);
+            ctx.lineTo(x, canvasSize);
+            ctx.stroke();
+        }
+        for (let y = 0; y < canvasSize; y += gridSize) {
+            ctx.beginPath();
+            ctx.moveTo(0, y);
+            ctx.lineTo(canvasSize, y);
+            ctx.stroke();
+        }
+
+        //food color
+        ctx.fillStyle = "#ec3750";
+        ctx.shadowColor = "#ec375099";
+        ctx.shadowBlur = 8;
+        ctx.beginPath();
+        ctx.arc(food.x * gridSize + gridSize / 2, food.y * gridSize + gridSize / 2, gridSize / 2 - 2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+
+        // the snake
+        snake.forEach((segment, i) => {
+            ctx.fillStyle = i === 0 ? "#ffffff" : "#e2e8f0";
+            ctx.shadowColor = i === 0 ? "#ffffff" : "transparent";
+            ctx.shadowBlur = i === 0 ? 6 : 0;
+            ctx.fillRect(segment.x * gridSize + 1, segment.y * gridSize + 1, gridSize - 2, gridSize - 2);
+        });
+        ctx.shadowBlur = 0;
+
+        // score
+        ctx.fillStyle = "#ec3750";
+        ctx.font = "14px 'JetBrains Mono', monospace";
+        ctx.fillText(`Score: ${score}`, 8, 18);
+
+        // gameover
+        if (gameOver) {
+            ctx.fillStyle = "rgba(0,0,0,0.7)";
+            ctx.fillRect(0, 0, canvasSize, canvasSize);
+            ctx.fillStyle = "#ec3750";
+            ctx.font = "bold 24px 'JetBrains Mono', monospace";
+            ctx.textAlign = "center";
+            ctx.fillText(`Score: ${score}`, canvasSize / 2, canvasSize / 2 + 15);
+            ctx.fillText("Press ESC to exit", canvasSize / 2, canvasSize / 2 + 40);
+            ctx.textAlign = "left";
+        }
+    }
+    function update() {
+        if (gameOver) return;
+
+        const head = {
+            x: snake[0].x + direction.x,
+            y: snake[0].y + direction.y,
+        };
+
+        if (head.x < 0 || head.x >= cols || head.y < 0 || head.y >= rows) {
+            //hit wall
+            gameOver = true;
+            draw();
+            return;
+        }
+
+        if (snake.some((s) => s.x === head.x && s.y === head.y)) {
+            gameOver = true;
+            draw();
+            return;
+        }
+
+        snake.unshift(head);
+
+        if (head.x === food.x && head.y === food.y) {
+            score += 10;
+            food = spawnFood();
+        } else {
+            snake.pop();
+        }
+
+        draw();
+    }
+
+    function onSnakeKey(e) {
+        if (e.key === "Escape") {
+            clearInterval(gameInterval);
+            document.removeEventListener("keydown", onSnakeKey);
+            document.addEventListener("keydown", onSnakeKey);
+            ctx.clearRect(0, 0, canvasSize, canvasSize);
+            canvas.classList.remove("active");
+
+            canvas.style.position = "";
+            canvas.style.border = "";
+            canvas.style.left = "";
+            canvas.style.top = "";
+            snakeActive = false;
+
+            const scoreColor = score > 50 ? "line-purple" : score > 20 ? "line-green" : "line-cyan";
+            addLine(`   Snake ended. Final score: ${score}`, scoreColor);
+            addLine("", "line-output");
+            input.focus();
+            return;
+        }
+
+        if (gameOver) return;
+
+        switch (e.key) {
+            case "ArrowUp":
+                if (direction.y !== 1) direction = { x: 0, y: -1 };
+                break;
+            case "ArrowDown":
+                if (direction.y !== -1) direction = { x: 0, y: 1 };
+                break;
+            case "ArrowLeft":
+                if (direction.x !== 1) direction = { x: -1, y: 0 };
+                break;
+            case "ArrowRight":
+                if (direction.x !== -1) direction = { x: 1, y: 0 };
+                break;
+        }
+        e.preventDefault();
+    }
+
+    document.addEventListener("keydown", onSnakeKey);
+
+    draw();
+    gameInterval = setInterval(update, 120);
 }
 
 //typing functions (output)
