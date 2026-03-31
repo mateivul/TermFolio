@@ -68,17 +68,21 @@ input.addEventListener("keydown", async (e) => {
         scrollToBottom();
     }
     if (e.key === "ArrowUp") {
-        e.preventDefault();
-        if (commandHistory.length > 0) {
-            historyIndex = Math.min(historyIndex + 1, commandHistory.length - 1);
-            input.value = commandHistory[historyIndex];
+        if (!snakeActive) {
+            e.preventDefault();
+            if (commandHistory.length > 0) {
+                historyIndex = Math.min(historyIndex + 1, commandHistory.length - 1);
+                input.value = commandHistory[historyIndex];
+            }
         }
     }
 
     if (e.key === "ArrowDown") {
-        e.preventDefault();
-        historyIndex = Math.max(historyIndex - 1, -1);
-        input.value = historyIndex >= 0 ? commandHistory[historyIndex] : "";
+        if (!snakeActive) {
+            e.preventDefault();
+            historyIndex = Math.max(historyIndex - 1, -1);
+            input.value = historyIndex >= 0 ? commandHistory[historyIndex] : "";
+        }
     }
 
     if (e.key === "Tab") {
@@ -87,7 +91,7 @@ input.addEventListener("keydown", async (e) => {
         if (partial) {
             const allCommands = Object.keys(commands);
             const matches = allCommands.filter((c) => c.startsWith(partial));
-            if (matches.length == 1) {
+            if (matches.length === 1) {
                 input.value = matches[0];
             } else if (matches.length > 1) {
                 addLine(`${DATA.username}@${DATA.hostname}:~$ ${partial}`, "line-input");
@@ -104,7 +108,7 @@ async function processCommand(rawCmd) {
     const args = parts.slice(1);
 
     // easter egg command 'hire-me'
-    if (cmd == "sudo" && args.length > 0) {
+    if (cmd === "sudo" && args.length > 0) {
         const sudoCmd = args.join("-");
         if (sudoCmd === "hire-me") {
             await cmdSudoHireMe();
@@ -126,7 +130,7 @@ async function cmdHelp() {
     await typeLine("    Available Commands:", "line-accent", 15);
     await typeLine("    ----------------------------------", "line-dim", 5);
     await typeLine("    about       - Who am I?", "line-output", 8);
-    await typeLine("    projects    - What i've build", "line-output", 8);
+    await typeLine("    projects    - What I've build", "line-output", 8);
     await typeLine("    skills      - My tech stack", "line-output", 8);
     await typeLine("    contact     - How to reach me", "line-output", 8);
     await typeLine("    socials     - Find me online", "line-output", 8);
@@ -199,7 +203,7 @@ async function cmdSkills() {
         { label: "Languages", items: DATA.skills.languages, color: "line-accent" },
         { label: "Frameworks", items: DATA.skills.frameworks, color: "line-cyan" },
         { label: "Tools", items: DATA.skills.tools, color: "line-green" },
-        { lavel: "Learning", items: DATA.skills.learning, color: "line-yellow" },
+        { label: "Learning", items: DATA.skills.learning, color: "line-yellow" },
     ];
 
     for (const cat of categories) {
@@ -543,8 +547,14 @@ async function cmdSnake() {
             ctx.fillStyle = "#ec3750";
             ctx.font = "bold 24px 'JetBrains Mono', monospace";
             ctx.textAlign = "center";
-            ctx.fillText(`Score: ${score}`, canvasSize / 2, canvasSize / 2 + 15);
-            ctx.fillText("Press ESC to exit", canvasSize / 2, canvasSize / 2 + 40);
+            ctx.fillText("GAME OVER!!!", canvasSize / 2, canvasSize / 2 - 25);
+            ctx.font = "14px 'JetBrains Mono', monospace";
+            ctx.fillStyle = "#e2e8f0";
+            ctx.fillText(`Score: ${score}`, canvasSize / 2, canvasSize / 2);
+            ctx.fillStyle = "#22c55e";
+            ctx.fillText("Press ENTER to restart", canvasSize / 2, canvasSize / 2 + 25);
+            ctx.fillStyle = "#e2e8f0";
+            ctx.fillText("Press ESC to exit", canvasSize / 2, canvasSize / 2 + 45);
             ctx.textAlign = "left";
         }
     }
@@ -559,12 +569,19 @@ async function cmdSnake() {
         if (head.x < 0 || head.x >= cols || head.y < 0 || head.y >= rows) {
             //hit wall
             gameOver = true;
+
+            const scoreColor = score > 50 ? "line-purple" : score > 20 ? "line-green" : "line-cyan";
+            addLine(`   Game Over! Final score: ${score}`, "scoreColor");
             draw();
             return;
         }
 
         if (snake.some((s) => s.x === head.x && s.y === head.y)) {
+            //hit self
             gameOver = true;
+
+            const scoreColor = score > 50 ? "line-purple" : score > 20 ? "line-green" : "line-cyan";
+            addLine(`   Game Over! Final score: ${score}`, "scoreColor");
             draw();
             return;
         }
@@ -602,7 +619,17 @@ async function cmdSnake() {
             return;
         }
 
-        if (gameOver) return;
+        if (gameOver) {
+            if (e.key === "Enter") {
+                snake = [{ x: Math.floor(cols / 2), y: Math.floor(rows / 2) }];
+                direction = { x: 1, y: 0 };
+                score = 0;
+                gameOver = false;
+                spawnFood();
+                addLine(`   Game restarted! Score reset to: ${score}`, "line-green");
+            }
+            return;
+        }
 
         switch (e.key) {
             case "ArrowUp":

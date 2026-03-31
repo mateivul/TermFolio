@@ -28,7 +28,7 @@ const DATA = {
         {
             name: "TermFolio",
             emoji: "💻",
-            description: "Terminal-style protofolio website - the one you're using right now!",
+            description: "Terminal-style protofolio website, the one you're using right now!",
             tech: ["Vanilla JS", "HTML", "CSS"],
             url: "https://github.com/mateivul/TermFolio",
         },

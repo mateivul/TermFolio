@@ -94,9 +94,9 @@ body::after {
 
 /*other styles/ all line styles */
 .line {
+    min-height: 1.6em;
     margin: 0;
     padding: 0;
-    min-height: 1.6em;
 }
 
 .line-input {
@@ -190,7 +190,7 @@ body::after {
     text-shadow: 0 0 8px rgba(236, 55, 80, 0.8);
 }
 
-.project.card {
+.project-card {
     border-left: 3px solid #ec3750;
     padding-left: 12px;
     margin: 8px 0;
@@ -238,4 +238,137 @@ body::after {
 
 .skill-items {
     color: var(--text);
+}
+
+#input-line {
+    display: flex;
+    align-items: center;
+    margin-top: 4px;
+}
+
+#prompt {
+    color: #ec3750;
+    font-weight: 700;
+    white-space: nowrap;
+    user-select: none;
+    text-shadow: 0 0 5px rgba(236, 55, 80, 0.5);
+}
+
+#command-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 14px;
+    caret-color: #ec3750;
+    text-shadow: 0 0 2px rgba(226, 232, 240, 0.5);
+}
+
+#command-input:focus {
+    animation: cursorGlow 1.4s ease-in-out infinite;
+}
+
+@keyframes cursorGlow {
+    0%,
+    100% {
+        filter: brightness(1);
+    }
+    50% {
+        filter: brightness(1.2);
+    }
+}
+
+/* canvas for matrix && snake */
+#overlay-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: 1000;
+    pointer-events: none;
+    display: none;
+}
+
+#overlay-canvas.active {
+    display: block;
+    pointer-events: all;
+}
+
+/*input */
+.typing-cursor::after {
+    content: "█";
+    animation: blink 0.7s step-end infinite;
+    color: var(--accent);
+    text-shadow: 0 0 8px #ec3750;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+.line {
+    animation: lineFadeIn 0.15s ease-out;
+}
+
+@keyframes lineFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.hack-line {
+    color: var(--green);
+    opacity: 0;
+    animation: hackFadeIn 0.1s forwards;
+}
+
+@keyframes hackFadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #ec3750;
+    border-radius: 4px;
+    box-shadow: 0 0 6px rgba(236, 55, 80, 0.5);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #ff4060;
+    box-shadow: 0 0 16px rgba(236, 55, 80, 0.8);
+}
+
+@media (max-width: 600px) {
+    body {
+        font-size: 12px;
+    }
+    #terminal {
+        padding: 15px;
+    }
+    .line-banner {
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 768px) and (min-width: 601px) {
+    body {
+        font-size: 13px;
+    }
 }
