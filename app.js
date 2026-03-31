@@ -23,13 +23,13 @@ const commands = {
     matrix: cmdMatrix,
     hack: cmdHack,
     cowsay: cmdCowsay,
-    // fortune: cmdFortune,
-    // whoami: cmdWhoami,
-    // date: cmdDate,
-    // vim: cmdVim,
-    // echo: cmdEcho,
-    // exit: cmdExit,
-    // logout: cmdExit, //same
+    fortune: cmdFortune,
+    whoami: cmdWhoami,
+    date: cmdDate,
+    vim: cmdVim,
+    echo: cmdEcho,
+    exit: cmdExit,
+    logout: cmdExit, //same
     ls: cmdHelp, // same as help
 };
 
@@ -392,6 +392,62 @@ async function cmdCowsay(args) {
     for (const line of cow) {
         addLine(line, "line-yellow");
     }
+    addLine("", "line-output");
+}
+
+async function cmdFortune() {
+    const fortune = DATA.fortunes[Math.floor(Math.random() * DATA.fortunes.length)];
+    addLine("", "line-output");
+    await typeLine(`    ${fortune}`, "line-purple", 18);
+    addLine("", "line-output");
+}
+
+async function cmdWhoami() {
+    addLine("", "line-outpu");
+    await typeLine("    You're a curious visitor exploring my portofolio.", "line-cyan", 18);
+    await typeLine("    Welcome! Type 'help' to see what you can do.", "line-output", 15);
+    addLine("", "line-output");
+}
+
+async function cmdDate() {
+    const now = new Date();
+    const formatted = now.toLocaleString("en-US", {
+        weekday: "short",
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+    });
+    addLine("", "line-output");
+    await typeLine(`    ${formatted}`, "line-cyan", 12);
+    addLine("", "line-output");
+}
+
+async function cmdVim() {
+    addLine("", "line-output");
+    await typeLine("    Starting vim...", "line-dim", 20);
+    await sleep(800);
+    await typeLine("    Just kidding! No one knows how to exit vim anyway. :D", "line-yellow", 18);
+    await typeLine("    (Hint: it's :q!)", "line-dim", 15);
+    addLine("", "line-output");
+}
+
+async function cmdEcho(args) {
+    if (args.length === 0) {
+        addLine("", "line-output");
+        return;
+    }
+    addLine("", "line-output");
+    addLine(`   ${args.join(" ")}`, "line-output");
+    addLine("", "line-output");
+}
+
+async function cmdExit() {
+    addLine("", "line-ouput");
+    await typeLine("    Nice try! But you can't excape a web portofolio. :>", "line-yellow", 18);
+    await typeLine("    (You can close the tab though... but why would you?", "lin-dim", 15);
     addLine("", "line-output");
 }
 

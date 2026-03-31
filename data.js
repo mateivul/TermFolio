@@ -54,7 +54,15 @@ const DATA = {
         instagram: "https://www.instagram.com/matei.vul",
     },
 
-    fortunes: [],
+    // coding dad jokes :))
+    fortunes: [
+        "The best way to predict the future is to build it.",
+        "Code is like humor. When you have to explain it, it's bad...",
+        "First, solve the problem. Then, write the code.",
+        "It works on my machine. ¯\\_(ツ)_/¯",
+        "There are only 10 types of people: those who understand binary and those who don't.",
+        "Try again...",
+    ],
 
     cowsayDefault: "Moo! Check out my projects!",
 };
